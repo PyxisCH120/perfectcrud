@@ -1,37 +1,53 @@
-import React, { useState } from 'react';
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import React, { useState, useEffect } from "react";
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import { db } from "@/services/firebase";
+import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 
 export default function Home() {
   const [items, setItems] = useState([]);
-  const [form, setForm] = useState({
-    name: '',
-    age: '',
-    phone: '',
-    email: ''
-  });
+  const [nome, setNome] = useState("");
+  const [age, setAge] = useState("");
+  const [fone, setFone] = useState("");
+  const [email, setEmail] = useState("");
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.id]: e.target.value });
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const fetchItems = async () => {
+    const querySnapshot = await getDocs(collection(db, "items"));
+    const itemsList = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    setItems(itemsList);
   };
 
-  const addItem = () => {
-    if (form.name && form.age && form.phone && form.email) {
-      setItems([...items, form]);
-      setForm({ name: '', age: '', phone: '', email: '' });
+  const addItem = async (e) => {
+    e.preventDefault();
+    if (nome && age && fone && email) {
+      const newItem = { name: nome, age: age, phone: fone, email: email };
+      const docRef = await addDoc(collection(db, "items"), newItem);
+      setItems([...items, { ...newItem, id: docRef.id }]);
+      setNome('');
+      setAge('');
+      setFone('');
+      setEmail('');
     } else {
-      alert('Por favor, preencha todos os campos.');
+      alert("Por favor, preencha todos os campos.");
     }
   };
 
-  const deleteItem = (index) => {
-    setItems(items.filter((_, i) => i !== index));
+  const deleteItem = async (id) => {
+    await deleteDoc(doc(db, "items", id));
+    setItems(items.filter(item => item.id !== id));
   };
 
   const editItem = (index) => {
     const item = items[index];
-    setForm(item);
-    deleteItem(index);
+    setNome(item.name);
+    setAge(item.age);
+    setFone(item.phone);
+    setEmail(item.email);
+    deleteItem(item.id);
   };
 
   return (
@@ -43,45 +59,45 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>tabela crud suprema</h1>
-        <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+        <h1 className={styles.title}>Tabela CRUD Suprema</h1>
+        <form onSubmit={addItem}>
           <input
             type="text"
-            id="name"
-            className={styles.input}
+            name="name"
             placeholder="Nome"
-            value={form.name}
-            onChange={handleChange}
+            value={nome}
+            onChange={(event) => setNome(event.target.value)}
+            className={styles.input}
             required
           />
           <input
             type="number"
-            id="age"
-            className={styles.input}
+            name="age"
             placeholder="Idade"
-            value={form.age}
-            onChange={handleChange}
+            value={age}
+            onChange={(event) => setAge(event.target.value)}
+            className={styles.input}
             required
           />
           <input
             type="tel"
-            id="phone"
-            className={styles.input}
+            name="phone"
             placeholder="Número de Telefone"
-            value={form.phone}
-            onChange={handleChange}
+            value={fone}
+            onChange={(event) => setFone(event.target.value)}
+            className={styles.input}
             required
           />
           <input
             type="email"
-            id="email"
-            className={styles.input}
+            name="email"
             placeholder="E-mail"
-            value={form.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            className={styles.input}
             required
           />
-          <button type="button" className={styles.button} onClick={addItem}>Adicionar</button>
+          <button type="submit" className={styles.button}>Salvar</button>
         </form>
         <table className={styles.table}>
           <thead>
@@ -95,14 +111,14 @@ export default function Home() {
           </thead>
           <tbody>
             {items.map((item, index) => (
-              <tr key={index}>
+              <tr key={item.id}>
                 <td className={styles.td}>{item.name}</td>
                 <td className={styles.td}>{item.age}</td>
                 <td className={styles.td}>{item.phone}</td>
                 <td className={styles.td}>{item.email}</td>
                 <td className={styles.td}>
                   <button className={`${styles.button} ${styles.edit}`} onClick={() => editItem(index)}>Editar</button>
-                  <button className={`${styles.button} ${styles.delete}`} onClick={() => deleteItem(index)}>Excluir</button>
+                  <button className={`${styles.button} ${styles.delete}`} onClick={() => deleteItem(item.id)}>Excluir</button>
                 </td>
               </tr>
             ))}
