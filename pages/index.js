@@ -144,7 +144,7 @@ export default function Home() {
             <p><strong>Idade:</strong> {selectedItem.age}</p>
             <p><strong>Número de Telefone:</strong> {selectedItem.phone}</p>
             <p><strong>E-mail:</strong> {selectedItem.email}</p>
-            {/* Adicione mais informações da ordem de serviço aqui, como status, custo final, etc. */}
+            {}
           </div>
         </div>
       )}
