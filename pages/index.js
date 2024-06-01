@@ -10,6 +10,7 @@ export default function Home() {
   const [age, setAge] = useState("");
   const [fone, setFone] = useState("");
   const [email, setEmail] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     fetchItems();
@@ -48,6 +49,14 @@ export default function Home() {
     setFone(item.phone);
     setEmail(item.email);
     deleteItem(item.id);
+  };
+
+  const visualizarDetalhes = (item) => {
+    setSelectedItem(item);
+  };
+
+  const closeModal = () => {
+    setSelectedItem(null);
   };
 
   return (
@@ -119,12 +128,26 @@ export default function Home() {
                 <td className={styles.td}>
                   <button className={`${styles.button} ${styles.edit}`} onClick={() => editItem(index)}>Editar</button>
                   <button className={`${styles.button} ${styles.delete}`} onClick={() => deleteItem(item.id)}>Excluir</button>
+                  <button className={`${styles.button} ${styles.view}`} onClick={() => visualizarDetalhes(item)}>Visualizar Detalhes</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </main>
+      {selectedItem && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <span className={styles.close} onClick={closeModal}>&times;</span>
+            <h2>Detalhes da Ordem de Serviço</h2>
+            <p><strong>Nome:</strong> {selectedItem.name}</p>
+            <p><strong>Idade:</strong> {selectedItem.age}</p>
+            <p><strong>Número de Telefone:</strong> {selectedItem.phone}</p>
+            <p><strong>E-mail:</strong> {selectedItem.email}</p>
+            {/* Adicione mais informações da ordem de serviço aqui, como status, custo final, etc. */}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
