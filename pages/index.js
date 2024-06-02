@@ -1,3 +1,15 @@
+/* Nome do arquivo: crudtable2
+* Data de criação: 25/05/2024
+* Autor: mateus micael p. rabelo
+* Matrícula: 01609372
+*
+* Descrição:
+* uma tabela crud 
+* 
+* 
+* Este script é parte o curso de ADS.
+*/
+
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
