@@ -1,40 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#Tabela CRUD Suprema
 
-## Getting Started
+https://crud-chico-59tqlbynk-pyxisch120s-projects.vercel.app
 
-First, run the development server:
+Descrição:
+A Tabela CRUD Suprema é uma interface de programação de aplicações (API) desenvolvida para gerenciar uma tabela CRUD. Com esta API, os desenvolvedores podem realizar operações básicas de CRUD (Create, Read, Update, Delete) em uma coleção de itens. Desenvolvida como parte do curso de Análise e Desenvolvimento de Sistemas, a CRUD Table API é construída utilizando o framework Next.js e integração com o Firebase para armazenamento de dados.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Esta documentação fornece informações detalhadas sobre os endpoints disponíveis, os parâmetros necessários para cada requisição, os códigos de resposta esperados e a estrutura dos dados esperados ou retornados. Além disso, inclui instruções sobre como configurar e executar o projeto em um ambiente de desenvolvimento local.Título do Vídeo: Como criar um CRUD com nextjs e Firebase
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Canal: paulo felix
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+URL do Vídeo: https://youtube.com/playlist?list=PLIeTPQT6t1tnaviY16Wr_6C0rqteEkUQg&si=5Mzzd-hp8Y_lOFrQ# CRUD Table API
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Este projeto é uma API para gerenciar uma tabela CRUD.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Endpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### GET /items
+Obtém todos os itens.
 
-## Learn More
+**Resposta:**
+- 200 OK: Retorna uma lista de itens.
 
-To learn more about Next.js, take a look at the following resources:
+### POST /items
+Adiciona um novo item.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Corpo da Requisição:**
+- `name` (string): Nome do item.
+- `age` (number): Idade do item.
+- `phone` (string): Número de telefone do item.
+- `email` (string): E-mail do item.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Resposta:**
+- 201 Created: Retorna o item criado.
 
-## Deploy on Vercel
+### DELETE /items/{id}
+Exclui um item específico.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Parâmetros de Rota:**
+- `id` (string): ID do item a ser excluído.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Resposta:**
+- 204 No Content: Indica que o item foi excluído com sucesso.
+
+## Estrutura do Modelo
+
+```yaml
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+        phone:
+          type: string
+        email:
+          type: string
+      required:
+        - name
+        - age
+        - phone
+        - email

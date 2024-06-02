@@ -24,6 +24,8 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
 
+  console.log(nome,age,email,fone)
+
   useEffect(() => {
     fetchItems();
   }, []);
