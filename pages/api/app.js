@@ -1,21 +1,15 @@
-
 /**
-
-Nome do arquivo: exemplo.js
-Data de criação: 24/06/2024
-Autor: mateus micael peixoto
-Matrícula: 01609372
-Descrição:
-Este código é um exemplo de configuração de inicialização do 
-Firebase em um aplicativo React. Ele utiliza o hook useEffect
- para garantir que o Firebase seja inicializado apenas uma vez
-  durante o ciclo de vida do aplicativo. A função MyApp é o componente
-   principal do aplicativo, onde o Firebase é inicializado e passado
-    como propriedade para outros componentes. A configuração do Firebase é 
-    importada de um arquivo externo.
-
-Este script é parte o curso de ADS.
-*/
+ * Nome do arquivo: ordens.js
+ * Data de criação:24/06/2024
+ * Autor: mateus micael p.rabelo
+ * Matrícula: 01609372
+ *
+ * Descrição:
+ * Este arquivo é responsável pelo CRUD da collection ordens de serviço
+ * fazendo a manipulação dos dados conformme o tipo de requisição realizada.
+ *
+ * Este script é parte o curso de ADS.
+ */
 
 import { useEffect } from "react";
 import firebase from "firebase/app";
