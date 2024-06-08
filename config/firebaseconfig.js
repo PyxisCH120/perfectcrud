@@ -1,3 +1,17 @@
+/**
+ * Nome do arquivo: exemplo.js
+ * Data de criação: 06/062024
+ * Autor: amteus micael peixoto
+ * Matrícula: 01609372
+ *
+ * Descrição:
+ * 
+ *
+ * Este script é parte o curso de ADS.
+ */
+
+
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
